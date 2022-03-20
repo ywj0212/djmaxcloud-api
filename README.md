@@ -1,3 +1,3 @@
 # DJMAX RESPECT V Record Server
 ## Introduction
-This is an Web API for save and manage play record from DJMAX RESPECT V.
+This is n Web API for saving and managing play record from DJMAX RESPECT V.

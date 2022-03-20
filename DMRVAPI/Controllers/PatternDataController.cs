@@ -1,4 +1,5 @@
 ﻿using DMRVAPI.Repositories.DataModel;
+using DMRVAPI.Repositories.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,25 +11,25 @@ namespace DMRVAPI.Controllers
     [ApiController]
     public class PatternDataController : ControllerBase
     {
-        private readonly ILogger<SongDataController> _logger;
-        private readonly IMariaDbService _mariaDbTestService;
+        private readonly ILogger<PatternDataController> _logger;
+        private readonly IMariaDbPatternService _patternDb;
 
-        public PatternDataController(ILogger<SongDataController> logger, IMariaDbService mariaDbTestService)
+        public PatternDataController(ILogger<PatternDataController> logger, IMariaDbPatternService mariaDbPatternService)
         {
-            _mariaDbTestService = mariaDbTestService;
+            _patternDb = mariaDbPatternService;
             _logger = logger;
         }
 
         [HttpGet]
         public async Task<IEnumerable<PatternDataModel>> Get()
         {
-            return await _mariaDbTestService.GetPatterns();
+            return await _patternDb.GetList();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PatternDataModel>> Get(ushort id)
         {
-            var result = await _mariaDbTestService.GetPattern(id);
+            var result = await _patternDb.Get(id);
             if (result != default)
                 return Ok(result);
             else
@@ -46,7 +47,7 @@ namespace DMRVAPI.Controllers
                 return BadRequest("Id cannot be set for insert action.");
             }
 
-            var id = await _mariaDbTestService.Insert(dto);
+            var id = await _patternDb.Insert(dto);
             if (id != default)
                 return CreatedAtRoute("FindOne", new { id }, dto);
             else
@@ -63,7 +64,7 @@ namespace DMRVAPI.Controllers
                 return BadRequest("Id should be set for insert action.");
             }
 
-            var result = await _mariaDbTestService.Update(dto);
+            var result = await _patternDb.Update(dto);
             if (result > 0)
                 return NoContent();
             else
@@ -75,7 +76,7 @@ namespace DMRVAPI.Controllers
         {
             return BadRequest();
 
-            var result = await _mariaDbTestService.Delete(id);
+            var result = await _patternDb.Delete(id);
             if (result > 0)
                 return NoContent();
             else

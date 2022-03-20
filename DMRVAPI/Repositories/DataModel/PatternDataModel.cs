@@ -3,12 +3,12 @@
 namespace DMRVAPI.Repositories.DataModel
 {
     [Table("pattern_data")]
-    public record PatternDataModel
+    public class PatternDataModel
     {
-        public ushort? id { get; init; }
-        public ushort? song_id { get; init; }
-        public string? button { get; init; }
-        public string? difficulty { get; init; }
-        public byte? level { get; init; }
+        public ushort? id { get; set; }
+        public ushort? song_id { get; set; }
+        public string? button { get; set; }
+        public string? difficulty { get; set; }
+        public byte? level { get; set; }
     }
 }

@@ -3,21 +3,21 @@
 namespace DMRVAPI.Repositories.DataModel
 {
     [Table("song_data")]
-    public record SongDataModel
+    public class SongDataModel
     {
-        public ushort? id { get; init; }
-        public string? category { get; init; }
-        public string? title { get; init; }
-        public string? composer { get; init; }
-        public ushort? min_bpm { get; init; }
-        public ushort? max_bpm { get; init; }
-        public ushort? duration { get; init; }
-        public bool? copyright { get; init; }
-        public string? bga_url { get; init; }
-        public string? hidden_bga_url { get; init; }
-        public string? thumbnail_img { get; init; }
-        public string? preview_img { get; init; }
-        public string? loading_img { get; init; }
+        public ushort? id { get; set; }
+        public string? category { get; set; }
+        public string? title { get; set; }
+        public string? composer { get; set; }
+        public ushort? min_bpm { get; set; }
+        public ushort? max_bpm { get; set; }
+        public ushort? duration { get; set; }
+        public bool? copyright { get; set; }
+        public string? bga_url { get; set; }
+        public string? hidden_bga_url { get; set; }
+        public string? thumbnail_img { get; set; }
+        public string? preview_img { get; set; }
+        public string? loading_img { get; set; }
 
     }
 }

@@ -1,4 +1,6 @@
 ﻿using DMRVAPI.Repositories.DataModel;
+using DMRVAPI.Repositories.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,19 +12,13 @@ namespace DMRVAPI.Controllers
     [ApiController]
     public class RecordDataController : ControllerBase
     {
-        private readonly ILogger<SongDataController> _logger;
-        private readonly IMariaDbService _mariaDbTestService;
+        private readonly ILogger<RecordDataController> _logger;
+        private readonly IMariaDbRecordService _recordDb;
 
-        public RecordDataController(ILogger<SongDataController> logger, IMariaDbService mariaDbTestService)
+        public RecordDataController(ILogger<RecordDataController> logger, IMariaDbRecordService mariaDbRecordService)
         {
-            _mariaDbTestService = mariaDbTestService;
+            _recordDb = mariaDbRecordService;
             _logger = logger;
-        }
-
-        [HttpPost]
-        public ActionResult AddRecord(uint user_id, uint steam_id)
-        {
-            return Ok();
         }
     }
 }

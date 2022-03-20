@@ -1,6 +1,6 @@
 ﻿using DMRVAPI.Repositories.DataModel;
+using DMRVAPI.Repositories.Service;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DMRVAPI.Controllers
@@ -11,24 +11,24 @@ namespace DMRVAPI.Controllers
     public class SongDataController : ControllerBase
     {
         private readonly ILogger<SongDataController> _logger;
-        private readonly IMariaDbService _mariaDbTestService;
+        private readonly IMariaDbSongService _songDb;
 
-        public SongDataController(ILogger<SongDataController> logger, IMariaDbService mariaDbTestService)
+        public SongDataController(ILogger<SongDataController> logger, IMariaDbSongService mariaDbSongService)
         {
-            _mariaDbTestService = mariaDbTestService;
+            _songDb = mariaDbSongService;
             _logger = logger;
         }
 
         [HttpGet]
         public async Task<IEnumerable<SongDataModel>> Get()
         {
-            return await _mariaDbTestService.GetSongs();
+            return await _songDb.GetList();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<SongDataModel>> Get(ushort id)
         {
-            var result = await _mariaDbTestService.GetSong(id);
+            var result = await _songDb.Get(id);
             if (result != default)
                 return Ok(result);
             else
@@ -46,7 +46,7 @@ namespace DMRVAPI.Controllers
                 return BadRequest("Id cannot be set for insert action.");
             }
 
-            var id = await _mariaDbTestService.Insert(dto);
+            var id = await _songDb.Insert(dto);
             if (id != default)
                 return CreatedAtRoute("FindOne", new { id }, dto);
             else
@@ -63,7 +63,7 @@ namespace DMRVAPI.Controllers
                 return BadRequest("Id should be set for insert action.");
             }
 
-            var result = await _mariaDbTestService.Update(dto);
+            var result = await _songDb.Update(dto);
             if (result > 0)
                 return NoContent();
             else
@@ -75,7 +75,7 @@ namespace DMRVAPI.Controllers
         {
             return BadRequest();
 
-            var result = await _mariaDbTestService.Delete(id);
+            var result = await _songDb.Delete(id);
             if (result > 0)
                 return NoContent();
             else

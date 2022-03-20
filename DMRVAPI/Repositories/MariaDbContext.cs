@@ -12,7 +12,7 @@ namespace DMRVAPI.Repositories
 
         public virtual DbSet<SongDataModel> SongDatas { get; set; }
         public virtual DbSet<PatternDataModel> PatternDatas { get; set; }
-        public virtual DbSet<PerformanceDataModel> PerformanceDatas { get; set; }
         public virtual DbSet<PlayRecordDataModel> PlayRecordDatas { get; set; }
+        public virtual DbSet<UserDataModel> UserDatas { get; set; }
     }
 }
